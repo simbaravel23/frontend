@@ -16,7 +16,7 @@ body {
 
 .navbar {
   background-color: #333;
-  padding: 1rem 20px; /* Adiciona um padding lateral fixo para o navbar */
+  padding: 1rem 20px; /* Padding lateral padrão para o navbar */
   box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
 
@@ -25,7 +25,7 @@ body {
   margin: 0;
   padding: 0;
   display: flex;
-  justify-content: flex-start; /* Alinha os links à esquerda por padrão */
+  justify-content: flex-start; /* Links do menu alinhados à esquerda por padrão */
   flex-wrap: wrap;
 }
 
@@ -47,16 +47,18 @@ body {
   text-decoration: underline;
 }
 
-/* Alterações importantes aqui */
+/* Modificações chave para o .content */
 .content {
-  flex-grow: 1;
-  padding: 20px;
+  flex-grow: 1; /* Permite que ocupe o espaço restante em um flex container */
   background-color: white;
-  margin: 20px; /* Margem padrão para telas menores */
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  width: auto; /* Garante que a largura é automática */
-  max-width: none; /* Remove qualquer limite de largura padrão */
+  box-sizing: border-box; /* Garante que padding e border sejam incluídos na largura */
+
+  /* Estilos padrão para telas pequenas (mobile first) */
+  margin: 10px; /* Margem menor nas laterais para telas pequenas */
+  padding: 15px; /* Padding interno */
+  width: auto; /* Largura automática para se ajustar à margem */
 }
 
 h1 {
@@ -92,10 +94,10 @@ table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 15px;
-  display: block; /* Essencial para overflow-x */
-  overflow-x: auto; /* Permite rolagem horizontal */
-  white-space: nowrap; /* Impede que o texto dentro das células quebre */
-  -webkit-overflow-scrolling: touch;
+  display: block; /* Essencial para overflow-x funcionar */
+  overflow-x: auto; /* Adiciona rolagem horizontal se a tabela for muito larga */
+  white-space: nowrap; /* Impede que o texto das células quebre de linha */
+  -webkit-overflow-scrolling: touch; /* Melhora o scroll em dispositivos iOS */
 }
 
 table thead {
@@ -160,19 +162,18 @@ table tbody tr:hover {
 
 /* Media Queries para responsividade */
 
-/* Para telas maiores que 768px (tablets em modo paisagem, desktops) */
+/* Para telas maiores que 768px (tablets em modo paisagem, desktops menores) */
 @media (min-width: 768px) {
   .content {
-    margin: 20px 50px; /* Margem lateral fixa para um espaçamento mais uniforme */
-    /* Ou, se quiser que ele preencha quase tudo, pode usar:
-       margin: 20px 5%;
-       max-width: 100%; (ou remover o max-width completamente, como fiz acima)
-    */
+    margin: 20px 30px; /* Margem de 30px nas laterais para telas maiores */
+    padding: 20px; /* Padding interno um pouco maior */
+    width: calc(100% - 60px); /* Ocupa 100% menos as margens laterais */
+    max-width: 1200px; /* Limita a largura máxima para leitura confortável */
   }
 
   .navbar ul {
-    justify-content: flex-end; /* Alinha os links à direita em telas maiores */
-    padding-right: 50px; /* Alinha com a margem direita do .content */
+    justify-content: flex-end; /* Alinha os links à direita */
+    padding-right: 30px; /* Alinha com a margem direita do .content */
   }
 
   .year-search {
@@ -190,51 +191,16 @@ table tbody tr:hover {
   }
 }
 
-/* Para telas maiores que 1280px (para controle em monitores muito largos) */
+/* Para telas maiores que 1280px (monitores grandes) */
 @media (min-width: 1280px) {
   .content {
-    max-width: 1400px; /* Define uma largura máxima para o conteúdo */
-    margin: 20px auto; /* Centraliza o conteúdo com a largura máxima */
+    max-width: 1400px; /* Define uma largura máxima maior */
+    margin: 20px auto; /* Centraliza o conteúdo com a nova largura máxima */
+    width: auto; /* Deixa a largura fluir com o max-width e auto margin */
   }
 
   .navbar ul {
-    justify-content: flex-end; /* Mantém à direita */
-    /* Para alinhar o padding do navbar com o content centralizado, uma técnica é: */
+    /* Ajusta o padding para alinhar o menu com o conteúdo centralizado */
     padding-right: calc((100% - 1400px) / 2 + 20px); /* 20px do padding interno do content */
-  }
-}
-
-
-/* Para telas menores que 768px (celulares, tablets em modo retrato) */
-@media (max-width: 767px) {
-  .navbar ul {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .navbar li {
-    margin: 5px 0;
-  }
-
-  .content {
-    margin: 10px;
-    padding: 15px;
-  }
-
-  .dashboard-section {
-    padding: 15px;
-  }
-
-  h1 {
-    font-size: 2rem;
-  }
-
-  .dashboard-section h2, .dashboard-section h3 {
-    font-size: 1.3rem;
-  }
-
-  table th, table td {
-    padding: 8px 10px;
-    font-size: 0.85rem;
   }
 }
