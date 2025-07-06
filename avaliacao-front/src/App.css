@@ -1,0 +1,240 @@
+/* src/App.css */
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  line-height: 1.6;
+  color: #333;
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.navbar {
+  background-color: #333;
+  padding: 1rem 20px; /* Adiciona um padding lateral fixo para o navbar */
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.navbar ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: flex-start; /* Alinha os links à esquerda por padrão */
+  flex-wrap: wrap;
+}
+
+.navbar li {
+  margin: 0 15px;
+  padding: 10px 0;
+}
+
+.navbar a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+.navbar a:hover,
+.navbar a.active {
+  color: #00aaff;
+  text-decoration: underline;
+}
+
+/* Alterações importantes aqui */
+.content {
+  flex-grow: 1;
+  padding: 20px;
+  background-color: white;
+  margin: 20px; /* Margem padrão para telas menores */
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: auto; /* Garante que a largura é automática */
+  max-width: none; /* Remove qualquer limite de largura padrão */
+}
+
+h1 {
+  color: #333;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Estilos para o Dashboard */
+.dashboard-container {
+  padding: 0;
+}
+
+.dashboard-section {
+  margin-bottom: 30px;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.dashboard-section h2, .dashboard-section h3 {
+  color: #333;
+  margin-top: 0;
+  margin-bottom: 15px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+  font-size: 1.5rem;
+}
+
+/* Tabelas responsivas */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+  display: block; /* Essencial para overflow-x */
+  overflow-x: auto; /* Permite rolagem horizontal */
+  white-space: nowrap; /* Impede que o texto dentro das células quebre */
+  -webkit-overflow-scrolling: touch;
+}
+
+table thead {
+  background-color: #e9ecef;
+}
+
+table th, table td {
+  border: 1px solid #ddd;
+  padding: 12px 15px;
+  text-align: left;
+  vertical-align: top;
+  font-size: 0.95rem;
+}
+
+table th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+  color: #555;
+}
+
+table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+table tbody tr:hover {
+  background-color: #eef;
+}
+
+.year-search {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.year-search input {
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.year-search button {
+  padding: 12px 25px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  font-size: 1rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.year-search button:hover {
+  background-color: #0056b3;
+  transform: translateY(-2px);
+}
+
+/* Media Queries para responsividade */
+
+/* Para telas maiores que 768px (tablets em modo paisagem, desktops) */
+@media (min-width: 768px) {
+  .content {
+    margin: 20px 50px; /* Margem lateral fixa para um espaçamento mais uniforme */
+    /* Ou, se quiser que ele preencha quase tudo, pode usar:
+       margin: 20px 5%;
+       max-width: 100%; (ou remover o max-width completamente, como fiz acima)
+    */
+  }
+
+  .navbar ul {
+    justify-content: flex-end; /* Alinha os links à direita em telas maiores */
+    padding-right: 50px; /* Alinha com a margem direita do .content */
+  }
+
+  .year-search {
+    flex-direction: row;
+    gap: 10px;
+  }
+
+  .year-search input {
+    flex-grow: 1;
+    width: auto;
+  }
+
+  .year-search button {
+    width: auto;
+  }
+}
+
+/* Para telas maiores que 1280px (para controle em monitores muito largos) */
+@media (min-width: 1280px) {
+  .content {
+    max-width: 1400px; /* Define uma largura máxima para o conteúdo */
+    margin: 20px auto; /* Centraliza o conteúdo com a largura máxima */
+  }
+
+  .navbar ul {
+    justify-content: flex-end; /* Mantém à direita */
+    /* Para alinhar o padding do navbar com o content centralizado, uma técnica é: */
+    padding-right: calc((100% - 1400px) / 2 + 20px); /* 20px do padding interno do content */
+  }
+}
+
+
+/* Para telas menores que 768px (celulares, tablets em modo retrato) */
+@media (max-width: 767px) {
+  .navbar ul {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .navbar li {
+    margin: 5px 0;
+  }
+
+  .content {
+    margin: 10px;
+    padding: 15px;
+  }
+
+  .dashboard-section {
+    padding: 15px;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  .dashboard-section h2, .dashboard-section h3 {
+    font-size: 1.3rem;
+  }
+
+  table th, table td {
+    padding: 8px 10px;
+    font-size: 0.85rem;
+  }
+}
