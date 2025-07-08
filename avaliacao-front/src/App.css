@@ -1,23 +1,37 @@
 /* src/App.css */
 
-body {
+/* Reset básico e garantia de que html e body ocupam 100% da viewport */
+html, body {
+  width: 100%;
+  height: 100%;
   margin: 0;
-  font-family: Arial, sans-serif;
+  padding: 0;
+  font-family: 'Inter', Arial, sans-serif; /* Usando Inter como sugerido */
   background-color: #f4f4f4;
   line-height: 1.6;
   color: #333;
+  box-sizing: border-box; /* Garante que padding e border sejam incluídos na largura/altura */
 }
 
+/* Aplica box-sizing a todos os elementos para um controle de layout mais previsível */
+*, *::before, *::after {
+  box-sizing: inherit;
+}
+
+/* Container principal da aplicação */
 .app-container {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  min-height: 100vh; /* Garante que ocupe pelo menos a altura da viewport */
+  width: 100%; /* Ocupa 100% da largura do body */
 }
 
+/* Barra de navegação */
 .navbar {
   background-color: #333;
-  padding: 1rem 20px; /* Padding lateral padrão para o navbar */
+  padding: 1rem 20px; /* Padding lateral padrão */
   box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  width: 100%; /* Garante que ocupe 100% da largura */
 }
 
 .navbar ul {
@@ -25,8 +39,8 @@ body {
   margin: 0;
   padding: 0;
   display: flex;
-  justify-content: flex-start; /* Links do menu alinhados à esquerda por padrão */
-  flex-wrap: wrap;
+  justify-content: center; /* Centraliza os links por padrão */
+  flex-wrap: wrap; /* Permite que os itens quebrem para a próxima linha */
 }
 
 .navbar li {
@@ -38,38 +52,42 @@ body {
   color: white;
   text-decoration: none;
   font-weight: bold;
-  transition: color 0.3s ease;
+  padding: 5px 10px; /* Adiciona padding para área de clique/toque */
+  border-radius: 5px; /* Cantos arredondados */
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .navbar a:hover,
 .navbar a.active {
-  color: #00aaff;
-  text-decoration: underline;
+  background-color: #007bff; /* Cor de fundo no hover/ativo */
+  color: white;
+  text-decoration: none; /* Remove underline no hover */
 }
 
-/* Modificações chave para o .content */
+/* Conteúdo principal da página (Dashboard/Lista de Filmes) */
 .content {
-  flex-grow: 1; /* Permite que ocupe o espaço restante em um flex container */
+  flex-grow: 1; /* Faz o conteúdo ocupar o espaço restante verticalmente */
   background-color: white;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  box-sizing: border-box; /* Garante que padding e border sejam incluídos na largura */
 
   /* Estilos padrão para telas pequenas (mobile first) */
-  margin: 10px; /* Margem menor nas laterais para telas pequenas */
-  padding: 15px; /* Padding interno */
-  width: auto; /* Largura automática para se ajustar à margem */
+  margin: 10px; /* Margem de 10px em todos os lados para mobile */
+  padding: 15px; /* Padding interno para mobile */
+  width: auto; /* Largura automática para se ajustar às margens */
+  min-width: 280px; /* Garante uma largura mínima para o conteúdo */
 }
 
 h1 {
   color: #333;
   margin-bottom: 20px;
   text-align: center;
+  font-size: 2.2rem; /* Tamanho maior para títulos */
 }
 
-/* Estilos para o Dashboard */
+/* Estilos para as seções do Dashboard */
 .dashboard-container {
-  padding: 0;
+  padding: 0; /* O padding já está no .content */
 }
 
 .dashboard-section {
@@ -86,22 +104,25 @@ h1 {
   margin-bottom: 15px;
   border-bottom: 1px solid #eee;
   padding-bottom: 10px;
-  font-size: 1.5rem;
+  font-size: 1.6rem; /* Tamanho ajustado para subtítulos */
 }
 
 /* Tabelas responsivas */
 table {
-  width: 100%;
+  width: 100%; /* A tabela deve ocupar 100% da largura do seu container */
   border-collapse: collapse;
   margin-top: 15px;
-  display: block; /* Essencial para overflow-x funcionar */
+  display: block; /* Essencial para overflow-x funcionar corretamente */
   overflow-x: auto; /* Adiciona rolagem horizontal se a tabela for muito larga */
   white-space: nowrap; /* Impede que o texto das células quebre de linha */
   -webkit-overflow-scrolling: touch; /* Melhora o scroll em dispositivos iOS */
+  border-radius: 8px; /* Cantos arredondados para a tabela */
+  overflow: hidden; /* Garante que os cantos arredondados sejam visíveis */
 }
 
 table thead {
-  background-color: #e9ecef;
+  background-color: #007bff; /* Fundo do cabeçalho da tabela */
+  color: white; /* Texto branco no cabeçalho */
 }
 
 table th, table td {
@@ -113,9 +134,7 @@ table th, table td {
 }
 
 table th {
-  background-color: #f2f2f2;
   font-weight: bold;
-  color: #555;
 }
 
 table tbody tr:nth-child(even) {
@@ -126,9 +145,10 @@ table tbody tr:hover {
   background-color: #eef;
 }
 
+/* Campo de busca por ano */
 .year-search {
   display: flex;
-  flex-direction: column;
+  flex-direction: column; /* Coloca input e botão em coluna por padrão (mobile) */
   gap: 15px;
   margin-bottom: 20px;
 }
@@ -139,7 +159,6 @@ table tbody tr:hover {
   border-radius: 6px;
   font-size: 1rem;
   width: 100%;
-  box-sizing: border-box;
 }
 
 .year-search button {
@@ -152,7 +171,6 @@ table tbody tr:hover {
   transition: background-color 0.3s ease, transform 0.2s ease;
   font-size: 1rem;
   width: 100%;
-  box-sizing: border-box;
 }
 
 .year-search button:hover {
@@ -165,19 +183,19 @@ table tbody tr:hover {
 /* Para telas maiores que 768px (tablets em modo paisagem, desktops menores) */
 @media (min-width: 768px) {
   .content {
-    margin: 20px 30px; /* Margem de 30px nas laterais para telas maiores */
-    padding: 20px; /* Padding interno um pouco maior */
-    width: calc(100% - 60px); /* Ocupa 100% menos as margens laterais */
+    margin: 20px auto; /* Centraliza o conteúdo horizontalmente */
+    padding: 25px; /* Padding interno um pouco maior */
+    width: calc(100% - 40px); /* Ocupa 100% da largura, com 20px de margem em cada lado */
     max-width: 1200px; /* Limita a largura máxima para leitura confortável */
   }
 
   .navbar ul {
     justify-content: flex-end; /* Alinha os links à direita */
-    padding-right: 30px; /* Alinha com a margem direita do .content */
+    padding-right: 20px; /* Alinha com a margem direita do .content */
   }
 
   .year-search {
-    flex-direction: row;
+    flex-direction: row; /* Volta a ser em linha */
     gap: 10px;
   }
 
@@ -195,12 +213,54 @@ table tbody tr:hover {
 @media (min-width: 1280px) {
   .content {
     max-width: 1400px; /* Define uma largura máxima maior */
-    margin: 20px auto; /* Centraliza o conteúdo com a nova largura máxima */
-    width: auto; /* Deixa a largura fluir com o max-width e auto margin */
+    margin: 30px auto; /* Centraliza o conteúdo com a largura máxima e mais margem superior/inferior */
+    padding: 30px; /* Padding interno maior */
   }
 
   .navbar ul {
-    /* Ajusta o padding para alinhar o menu com o conteúdo centralizado */
-    padding-right: calc((100% - 1400px) / 2 + 20px); /* 20px do padding interno do content */
+    /* Ajusta o padding do navbar para alinhar com o conteúdo centralizado */
+    padding-right: calc((100% - 1400px) / 2 + 30px); /* 30px do padding lateral do .content */
+  }
+
+  h1 {
+    font-size: 2.8rem;
+  }
+
+  .dashboard-section h2, .dashboard-section h3 {
+    font-size: 1.8rem;
+  }
+}
+
+/* Para telas menores que 768px (celulares, tablets em modo retrato) */
+@media (max-width: 767px) {
+  .navbar ul {
+    flex-direction: column; /* Links do menu em coluna */
+    align-items: center; /* Centraliza os itens na coluna */
+  }
+
+  .navbar li {
+    margin: 5px 0;
+  }
+
+  .content {
+    margin: 10px;
+    padding: 15px;
+  }
+
+  .dashboard-section {
+    padding: 15px;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  .dashboard-section h2, .dashboard-section h3 {
+    font-size: 1.3rem;
+  }
+
+  table th, table td {
+    padding: 8px 10px;
+    font-size: 0.85rem;
   }
 }
