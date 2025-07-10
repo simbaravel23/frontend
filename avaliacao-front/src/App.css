@@ -24,6 +24,7 @@ html, body {
   flex-direction: column;
   min-height: 100vh; /* Garante que ocupe pelo menos a altura da viewport */
   width: 100%; /* Ocupa 100% da largura do body */
+  /* Removido align-items: center daqui, pois o .content terá margin: auto para centralizar */
 }
 
 /* Barra de navegação */
@@ -72,10 +73,11 @@ html, body {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 
   /* Estilos padrão para telas pequenas (mobile first) */
-  margin: 10px; /* Margem de 10px em todos os lados para mobile */
+  margin: 10px auto; /* Centraliza com margem de 10px em cima/baixo e auto nas laterais */
   padding: 15px; /* Padding interno para mobile */
-  width: auto; /* Largura automática para se ajustar às margens */
+  width: calc(100% - 20px); /* Ocupa 100% menos 10px de margem de cada lado */
   min-width: 280px; /* Garante uma largura mínima para o conteúdo */
+  max-width: 100%; /* Garante que não ultrapasse 100% da largura do pai */
 }
 
 h1 {
@@ -185,7 +187,7 @@ table tbody tr:hover {
   .content {
     margin: 20px auto; /* Centraliza o conteúdo horizontalmente */
     padding: 25px; /* Padding interno um pouco maior */
-    width: calc(100% - 40px); /* Ocupa 100% da largura, com 20px de margem em cada lado */
+    width: 95%; /* Ocupa 95% da largura disponível */
     max-width: 1200px; /* Limita a largura máxima para leitura confortável */
   }
 
@@ -215,6 +217,7 @@ table tbody tr:hover {
     max-width: 1400px; /* Define uma largura máxima maior */
     margin: 30px auto; /* Centraliza o conteúdo com a largura máxima e mais margem superior/inferior */
     padding: 30px; /* Padding interno maior */
+    width: 90%; /* Ocupa 90% da largura disponível para mais espaçamento */
   }
 
   .navbar ul {
@@ -243,8 +246,9 @@ table tbody tr:hover {
   }
 
   .content {
-    margin: 10px;
+    margin: 10px auto; /* Centraliza também em telas menores */
     padding: 15px;
+    width: calc(100% - 20px); /* Garante 10px de margem em cada lado */
   }
 
   .dashboard-section {
