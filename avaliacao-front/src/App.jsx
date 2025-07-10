@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './App.css'; // Importa seu arquivo CSS para estilos
 
-// Componente de Dashboard placeholder
+// Componente de Dashboard
 const Dashboard = () => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -10,7 +10,7 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Substitua esta URL pela URL real da sua API de backend para o dashboard
+        // A URL real da sua API de backend para o dashboard
         const response = await fetch('https://listadefilmes-adtf.onrender.com/api/movies/dashboard-summary');
         if (!response.ok) {
           throw new Error(`Erro HTTP! Status: ${response.status}`);
@@ -47,64 +47,127 @@ const Dashboard = () => {
     );
   }
 
-  // Exemplo de como você pode renderizar os dados do dashboard
+  // Renderiza os dados do dashboard
   return (
     <div className="dashboard-container">
       <h1>Dashboard</h1>
+
+      {/* Seção: Anos com Múltiplos Vencedores */}
       <div className="dashboard-section">
-        <h2>Filmes por Ano</h2>
-        {data && data.moviesByYear ? (
+        <h2>Anos com Mais de Um Vencedor</h2>
+        {data && data.yearsWithMultipleWinners && data.yearsWithMultipleWinners.length > 0 ? (
           <table>
             <thead>
               <tr>
                 <th>Ano</th>
-                <th>Quantidade</th>
+                <th>Quantidade de Vencedores</th>
               </tr>
             </thead>
             <tbody>
-              {Object.entries(data.moviesByYear).map(([year, count]) => (
-                <tr key={year}>
-                  <td>{year}</td>
-                  <td>{count}</td>
+              {data.yearsWithMultipleWinners.map((item) => (
+                <tr key={item.year}>
+                  <td>{item.year}</td>
+                  <td>{item.winnerCount}</td>
                 </tr>
               ))}
             </tbody>
           </table>
         ) : (
-          <p>Nenhum dado de filmes por ano disponível.</p>
+          <p>Nenhum dado de anos com múltiplos vencedores disponível.</p>
         )}
       </div>
 
+      {/* Seção: Estúdios com Mais Vitórias */}
       <div className="dashboard-section">
-        <h2>Produtores com Múltiplos Vencedores</h2>
-        {data && data.producersWithMultipleWinners ? (
+        <h2>Estúdios com Mais Vitórias</h2>
+        {data && data.studiosWithWinCount && data.studiosWithWinCount.length > 0 ? (
           <table>
             <thead>
               <tr>
-                <th>Produtor</th>
-                <th>Intervalo Mínimo</th>
-                <th>Intervalo Máximo</th>
+                <th>Estúdio</th>
+                <th>Contagem de Vitórias</th>
               </tr>
             </thead>
             <tbody>
-              {data.producersWithMultipleWinners.map((producer, index) => (
+              {data.studiosWithWinCount.map((item, index) => (
                 <tr key={index}>
-                  <td>{producer.producer}</td>
-                  <td>{producer.interval}</td>
-                  <td>{producer.previousWin} - {producer.followingWin}</td>
+                  <td>{item.name}</td>
+                  <td>{item.winCount}</td>
                 </tr>
               ))}
             </tbody>
           </table>
         ) : (
-          <p>Nenhum dado de produtores com múltiplos vencedores disponível.</p>
+          <p>Nenhum dado de estúdios com vitórias disponível.</p>
+        )}
+      </div>
+
+      {/* Seção: Produtores com Maior e Menor Intervalo entre Vitórias */}
+      <div className="dashboard-section">
+        <h2>Produtores com Maior e Menor Intervalo entre Vitórias</h2>
+        {data && data.maxMinWinIntervalForProducers ? (
+          <>
+            <h3>Menor Intervalo</h3>
+            {data.maxMinWinIntervalForProducers.min && data.maxMinWinIntervalForProducers.min.length > 0 ? (
+              <table>
+                <thead>
+                  <tr>
+                    <th>Produtor</th>
+                    <th>Intervalo</th>
+                    <th>Vitória Anterior</th>
+                    <th>Próxima Vitória</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {data.maxMinWinIntervalForProducers.min.map((item, index) => (
+                    <tr key={index}>
+                      <td>{item.producer}</td>
+                      <td>{item.interval}</td>
+                      <td>{item.previousWin}</td>
+                      <td>{item.followingWin}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            ) : (
+              <p>Nenhum produtor com menor intervalo encontrado.</p>
+            )}
+
+            <h3>Maior Intervalo</h3>
+            {data.maxMinWinIntervalForProducers.max && data.maxMinWinIntervalForProducers.max.length > 0 ? (
+              <table>
+                <thead>
+                  <tr>
+                    <th>Produtor</th>
+                    <th>Intervalo</th>
+                    <th>Vitória Anterior</th>
+                    <th>Próxima Vitória</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {data.maxMinWinIntervalForProducers.max.map((item, index) => (
+                    <tr key={index}>
+                      <td>{item.producer}</td>
+                      <td>{item.interval}</td>
+                      <td>{item.previousWin}</td>
+                      <td>{item.followingWin}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            ) : (
+              <p>Nenhum produtor com maior intervalo encontrado.</p>
+            )}
+          </>
+        ) : (
+          <p>Nenhum dado de produtores com intervalo de vitórias disponível.</p>
         )}
       </div>
     </div>
   );
 };
 
-// Componente de MovieList placeholder
+// Componente de MovieList
 const MovieList = () => {
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -115,14 +178,15 @@ const MovieList = () => {
   useEffect(() => {
     const fetchMovies = async () => {
       try {
-        // Substitua esta URL pela URL real da sua API de backend para a lista de filmes
+        // A URL real da sua API de backend para a lista de filmes
         const response = await fetch('https://listadefilmes-adtf.onrender.com/api/movies');
         if (!response.ok) {
           throw new Error(`Erro HTTP! Status: ${response.status}`);
         }
         const result = await response.json();
-        setMovies(result);
-        setFilteredMovies(result); // Inicialmente, todos os filmes são exibidos
+        // A API de lista de filmes retorna um objeto com 'content'
+        setMovies(result.content);
+        setFilteredMovies(result.content); // Inicialmente, todos os filmes são exibidos
       } catch (err) {
         console.error("Erro ao carregar lista de filmes:", err);
         setError("Erro: Não foi possível carregar a lista de filmes. Verifique a conexão com a API.");
@@ -141,7 +205,10 @@ const MovieList = () => {
         const filtered = movies.filter(movie => movie.year === year);
         setFilteredMovies(filtered);
       } else {
-        alert('Por favor, insira um ano válido.'); // Substitua por um modal ou mensagem na UI
+        // Melhorar isso para um modal ou mensagem na UI, não alert()
+        // Por favor, evite usar alert() em aplicações web.
+        // Implemente um modal ou uma mensagem na interface do usuário.
+        console.warn('Por favor, insira um ano válido.');
       }
     } else {
       setFilteredMovies(movies); // Se a busca estiver vazia, mostra todos os filmes
